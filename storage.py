@@ -47,6 +47,8 @@ def query(db: pd.DataFrame, flight_id: int) -> Dict[str, Any]:
 
     results: List[Tuple[int, float]] = []
     all_fid = db['UniqueFlightId'].unique()
+    print("All flight ids")
+    print(all_fid)
     for fid in all_fid:
         if flight_id == fid:
             continue
@@ -122,7 +124,7 @@ def get_df(name: str) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    fpath = 'drone_flight_dataset_dedrone/2023-05-01_00-00-00_clean.csv'
+    fpath = 'synthetic_data_full.csv'
     db = get_df(fpath)
     # print(query(db, flight_id=1))
 
