@@ -6,7 +6,7 @@ import keplergl
 
 app = Flask(__name__)
 
-def get_frechet(df, flight_id):
+def get_frechet(df, flight_id, threshold=0.01):
     flight_coords = df[df['UniqueFlightId'] == int(flight_id)][['DetectionLatitude', 'DetectionLongitude']].to_records(index=False).tolist()
 
     similarity_dict = {}
@@ -68,10 +68,11 @@ def result():
 @app.route('/similarpaths', methods=['POST'])
 def similarpaths():
     flight_id = request.form['flight_id_query']
+    threshold = request.form['threshold']
 
     df = pd.read_csv('synthetic_data_full.csv')
     
-    closest_flight_path_ids = get_frechet(df, flight_id)
+    closest_flight_path_ids = get_frechet(df, flight_id, threshold)
 
     # Filter the DataFrame based on the input values
     df = df[
